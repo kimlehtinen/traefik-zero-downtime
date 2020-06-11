@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Flask Parent Template</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/styles.css') }}">
+</head>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">First Web App</h1>
+
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    <div id="app">
+        ${ message }
+
+        {% block content %}
+        {% endblock %}
+      </div>
+   
+
+    <script>
+    var app = new Vue({
+    el: '#app',
+    delimiters: ['${', '}'],
+    data: {
+        message: 'Hello Vue!'
+    }
+    })
+    </script>
+
+ </body>
+</html>
