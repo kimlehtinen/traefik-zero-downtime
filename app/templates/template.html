@@ -6,9 +6,8 @@
     <meta name="description" content="Kim Lehtinen">
     <meta name="author" content="Kim Lehtinen">
     <title>Kim Lehtinen</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="{{ url_for('static',    filename='js/vue.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static',    filename='vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static',    filename='css/scrolling-nav.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',    filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',    filename='pygments-css/fruity.css') }}">
 </head>
@@ -40,12 +39,13 @@
         </div>
     </nav>
 
-  <header class="bg-primary text-white">
-    <div class="container text-center">
-      <h1>Kim Lehtinen</h1>
-      <p class="lead">Software Developer</p>
+    <div id="hero-image" class="text-white">
+        <div class="overlay"></div>
+        <div class="container text-center centered-hero-text">
+        <h1>Kim Lehtinen</h1>
+        <p class="lead">Software Developer</p>
+        </div>
     </div>
-  </header>
 
     <div id="app">
     {% block content %}
@@ -60,15 +60,7 @@
         <!-- /.container -->
     </footer>
 
-    <script>
-        var app = new Vue({
-        el: '#app',
-        delimiters: ['${', '}'],
-        data: {
-            message: 'Hello Vue!'
-        }
-        })
-    </script>
+    <script src="{{ url_for('static',    filename='js/app.js') }}"></script>
     <script src="{{ url_for('static',    filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static',    filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static',    filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>

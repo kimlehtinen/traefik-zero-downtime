@@ -10,6 +10,15 @@
           My name is Kim Lehtinen, and I'm a Software Developer & MSc Student at University of Vaasa. 
           I love learning new technologies and sharing knowledge.
         </p>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <h3>Blog posts</h3>
+        {% with posts=posts %}
+          {% include 'partials/blog-posts.html' %}
+        {% endwith %}
       </div>
     </div>
   </div>

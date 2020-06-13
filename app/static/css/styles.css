@@ -24,3 +24,39 @@ section {
     background-color: transparent;
     padding-left: 0;
 }
+
+#hero-image {
+    position: relative;
+    background-color: #343a40;
+    background: url("/static/images/laptop_code.jpg") no-repeat center center;
+    background-size: cover;
+    padding-top: 14rem;
+    padding-bottom: 5rem;
+}
+
+#hero-image .overlay {
+    position: absolute;
+    background-color: #212529;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+}
+
+.centered-hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (min-width: 768px) {
+    #hero-image {
+        padding-top: 8rem;
+        padding-bottom: 12rem;
+    }
+    #hero-image h1 {
+        font-size: 3rem;
+    }
+}
