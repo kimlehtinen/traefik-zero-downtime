@@ -4,4 +4,4 @@ services:
   - docker
 
 before_install:
-  - docker build -t kim3z/website .
+  - docker build -t kim3z/website ./app
