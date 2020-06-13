@@ -1,2 +1,4 @@
 flask
 flask_restful
+markdown2
+Pygments

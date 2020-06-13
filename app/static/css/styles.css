@@ -1,3 +1,26 @@
+header {
+    padding: 100px 0 50px;
+}
+  
+section {
+    padding: 150px 0;
+}
+
 .logo {
     background-color: aquamarine;
+}
+
+.section-blog-post {
+    padding-top: 50px;
+}
+
+.section-blog-post img {
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.breadcrumb-blogpost .breadcrumb {
+    background-color: transparent;
+    padding-left: 0;
 }

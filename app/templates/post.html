@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <nav class="breadcrumb-blogpost" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Blog</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Library</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+<section class="section-blog-post">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        {{ markdown|safe }}
+      </div>
+    </div>
+  </div>
+</section>
+    
+{% endblock %}

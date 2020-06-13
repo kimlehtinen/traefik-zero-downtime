@@ -1,41 +1,89 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Flask Parent Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Kim Lehtinen">
+    <meta name="author" content="Kim Lehtinen">
+    <title>Kim Lehtinen</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="{{ url_for('static',    filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/scrolling-nav.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',    filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',    filename='pygments-css/fruity.css') }}">
 </head>
-  <body>
-    <header>
-      <div class="container">
-        <h1 class="logo">First Web App</h1>
+<body id="page-top">
 
-        <strong><nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-          </ul>
-        </nav></strong>
-      </div>
-    </header>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Kim Lehtinen</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{{ url_for('home') }}">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{{ url_for('about') }}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="https://github.com/kim3z">Github</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="https://twitter.com/kim3z">Twitter</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+  <header class="bg-primary text-white">
+    <div class="container text-center">
+      <h1>Kim Lehtinen</h1>
+      <p class="lead">Software Developer</p>
+    </div>
+  </header>
+
     <div id="app">
-        ${ message }
-
-        {% block content %}
-        {% endblock %}
-      </div>
-   
+    {% block content %}
+    {% endblock %}
+    </div>
+    
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Lehtidata 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
 
     <script>
-    var app = new Vue({
-    el: '#app',
-    delimiters: ['${', '}'],
-    data: {
-        message: 'Hello Vue!'
-    }
-    })
+        var app = new Vue({
+        el: '#app',
+        delimiters: ['${', '}'],
+        data: {
+            message: 'Hello Vue!'
+        }
+        })
     </script>
+    <script src="{{ url_for('static',    filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',    filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static',    filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static',    filename='js/scrolling-nav.js') }}"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
 
+    <script>
+    function highlightCode() {
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightBlock(pres[i]);
+        }
+    }
+    highlightCode();
+    </script>
  </body>
 </html>

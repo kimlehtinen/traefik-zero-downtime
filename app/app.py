@@ -3,6 +3,8 @@ from flask import Flask, render_template
 from flask import jsonify
 import os
 import json
+import markdown2
+
 
 app = Flask(__name__)
 
@@ -23,6 +25,18 @@ def user(name):
 def blog():
     dir = blog_tree("blog", None)
     return jsonify(dir)
+
+@app.route("/blog/<year>/<month>/<day>/<slug>")
+def blogpost(year, month, day, slug):
+    file_path = os.path.join('blog', str(year), str(month), str(day), str(slug), "README.md")
+    try:
+        with open(file_path, "r") as readme_file:
+            md_template_string = markdown2.markdown(
+                readme_file.read(), extras=['fenced-code-blocks']
+            )
+            return render_template("post.html", markdown=md_template_string)
+    except Exception as e:
+        return str(e)
 
 # Helpers
 def blog_tree(path, parent):
