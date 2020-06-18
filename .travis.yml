@@ -18,3 +18,7 @@ deploy:
   script: bash docker_push.sh
   on:
     branch: master
+
+after_deploy:
+  - sudo sh ./run_proxy.sh
+  - sudo sh ./deployment.sh
