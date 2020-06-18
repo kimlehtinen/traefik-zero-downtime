@@ -14,5 +14,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   
 deploy:
-  script:
-    - bash docker_push.sh
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master
