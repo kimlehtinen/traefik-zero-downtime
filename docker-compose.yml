@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: kimlehtinen/website:12.1
+    image: kimlehtinen/website:v0.0.1-build-$TRAVIS_JOB_NUMBER
     labels:
       - "traefik.enable=true"
       - "traefik.backend=flask_app"

@@ -46,6 +46,14 @@ def blog():
     dir = blog_tree("blog", None)
     return jsonify(dir)
 
+# GET check health
+@app.route("/health")
+def health():
+    msg = {
+        "message": "Healthy"
+    }
+    return jsonify(msg)
+
 ############ Helpers ############
 
 # get all blog posts
