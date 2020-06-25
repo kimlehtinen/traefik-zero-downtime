@@ -1,0 +1,1 @@
+scp docker-compose.yml deploy@164.90.168.125:/home/deploy/website/docker-compose.yml

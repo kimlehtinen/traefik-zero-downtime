@@ -2,6 +2,9 @@ language: bash
 
 services:
   - docker
+
+addons:
+  ssh_known_hosts: 164.90.168.125
   
 env:
   - DOCKER_COMPOSE_VERSION=1.4.2
@@ -13,11 +16,23 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in
+deploy_rsa.enc -out deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
+
+
 deploy:
-  provider: script
-  script: bash docker_push.sh
-  on:
-    branch: master
+  - provider: script
+    script: bash docker_push.sh
+    on:
+      branch: master
+  - provider: script
+    script: bash update_remote_version.sh
+    on:
+      branch: master
 
 after_deploy:
   - sudo sh ./run_proxy.sh
