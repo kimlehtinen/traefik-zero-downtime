@@ -7,17 +7,18 @@ addons:
   ssh_known_hosts: 164.90.168.125
   
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  global:
+    secure: mL6Z6Cb/lO0stkZ86aExdOYytXZeru347lpD1fbPjIszAC1Rs7JOrGgm8X4bCzWF1AmjKiCHzApGZOAZYjUqzFiA61lvO9zH1dfrGjzqIYMoqnBIiZ46fYoVGx4iNKosdmOT/24zagIpxec3oor/EeBhf1vJQhOACwCg2U1EQLVLcAUhhghRo0dwIN+JOrKtchtWvSB4H+mJ1zFwkIEfktR0tp+u3OmmyKjMMNBu37ZVNSJrkNssPY0XmyBgNQGYsyZ2wgwKhSoQd3Dwp9JGbwLXwmbZ+hBKcMmG0rAmfiupijIRlfwNWb/g3ujKsIW0+o4yYcDW+CtraFZbfWJMJk5Hvig5EgVd9Jm/ozBDEU3MSVSCBEGHESB1pYgAove5UokIAuesgbAqd7pQ19B6kHVRkeR5kQ22JsfsOZ9xvxdPUmoERRsn9Kk9OkonyPflQsbUFVqNZHXmAe7WbxpyaYhTjI+erBs3LRg+EjhQAHAVBpYrloA201Bt3BRAXW17QOUo4oI4NWfurHNTSFNrP90PDXLzO6thYjCfjABlUVZ9kmKDBLrBmT0yEw/0IwF2kZqRs6frHigYuiBuo1EgRcZVAeJ3mHdtcGkNrPhy5ZahCoQbUJ2J3rUnf3jOPhF11gK8jYscRx7AtouY6a/5dPggFvFC7K1JFqDSmfCtyRg=
 
 before_install:
   - docker build -t kimlehtinen/website:v0.0.1-build-$TRAVIS_JOB_NUMBER ./app
   - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   
 before_deploy:
-  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deploy_rsa.enc -out deploy_rsa -d
+  - echo $DEPLOY_RSA_PSW | gpg --passphrase-fd 0 deploy_rsa_psw.gpg
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
