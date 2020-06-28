@@ -18,10 +18,13 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   
 before_deploy:
-  - echo $DEPLOY_RSA_PSW | gpg --passphrase-fd 0 deploy_rsa.gpg
+  - echo $DEPLOY_RSA_PSW | gpg --yes --passphrase-fd 0 deploy_rsa.gpg
+  - mv deploy_rsa /tmp
   - eval "$(ssh-agent -s)"
-  - chmod 600 deploy_rsa
-  - ssh-add deploy_rsa
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
+  - echo -e "Host 164.90.168.125\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - ls -la $TRAVIS_BUILD_DIR
 
 deploy:
   - provider: script
@@ -29,8 +32,7 @@ deploy:
     on:
       branch: master
   - provider: script
-    skip_cleanup: true
-    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR deploy@164.90.168.125:/home/deploy/website
+    script: bash update_remote_version.sh
     on:
       branch: master
 
