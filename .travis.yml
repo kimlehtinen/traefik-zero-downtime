@@ -28,7 +28,8 @@ deploy:
     on:
       branch: master
   - provider: script
-    script: bash update_remote_version.sh
+    skip_cleanup: true
+    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR deploy@164.90.168.125:/home/deploy/website
     on:
       branch: master
 
