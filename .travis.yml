@@ -27,7 +27,9 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
   - echo -e "Host 164.90.168.125\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ls -la $TRAVIS_BUILD_DIR
-  - sudo sh update_version.sh
+  - sed -i "s/website:latest/website:0.0.2/g" docker-compose.yml
+  - cat docker-compose.yml
+  #- ssh deploy@164.90.168.125 'sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml'
 deploy:
   - provider: script
     script: bash docker_push.sh
