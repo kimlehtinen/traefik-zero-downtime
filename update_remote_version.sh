@@ -1,1 +1,1 @@
-rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/* deploy@164.90.168.125:/home/deploy/website
+rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR deploy@164.90.168.125:/home/deploy

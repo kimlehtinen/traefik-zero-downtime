@@ -25,9 +25,6 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
   - echo -e "Host 164.90.168.125\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ls -la $TRAVIS_BUILD_DIR
-  - cat update_remote_version.sh
-  - ssh deploy@164.90.168.125
-
 deploy:
   - provider: script
     script: bash docker_push.sh
