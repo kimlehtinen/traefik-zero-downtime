@@ -34,7 +34,7 @@ deploy:
     on:
       branch: master
   - provider: script
-    script: bash update_remote_version.sh
+    script: bash send_files.sh
     on:
       branch: master
 
