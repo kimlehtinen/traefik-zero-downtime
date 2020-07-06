@@ -18,7 +18,9 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-  
+  - sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" $TRAVIS_BUILD_DIR/docker-compose.yml
+  - cat $TRAVIS_BUILD_DIR/docker-compose.yml
+
 before_deploy:
   - echo $DEPLOY_RSA_PSW | gpg --yes --passphrase-fd 0 deploy_rsa.gpg
   - mv deploy_rsa /tmp
@@ -27,8 +29,6 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
   - echo -e "Host 164.90.168.125\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ls -la $TRAVIS_BUILD_DIR
-  - sed -i "s/website:latest/website:0.0.2/g" docker-compose.yml
-  - cat docker-compose.yml
   #- ssh deploy@164.90.168.125 'sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml'
 deploy:
   - provider: script
@@ -40,6 +40,7 @@ deploy:
     on:
       branch: master
 
-#after_deploy:
+after_deploy:
+  - ssh deploy@164.90.168.125 sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml
   #- sudo sh ./run_proxy.sh
   #- sudo sh ./deployment.sh
