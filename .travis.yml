@@ -8,6 +8,8 @@ addons:
   
 env:
   global:
+    - SERVER_USER=deploy
+    - SERVER_IP=164.90.168.125
     - WEBSITE_VERSION=0.0.1
     - WEBSITE_VERSION_NAME=v$WEBSITE_VERSION-build-$TRAVIS_JOB_NUMBER
     - secure: mL6Z6Cb/lO0stkZ86aExdOYytXZeru347lpD1fbPjIszAC1Rs7JOrGgm8X4bCzWF1AmjKiCHzApGZOAZYjUqzFiA61lvO9zH1dfrGjzqIYMoqnBIiZ46fYoVGx4iNKosdmOT/24zagIpxec3oor/EeBhf1vJQhOACwCg2U1EQLVLcAUhhghRo0dwIN+JOrKtchtWvSB4H+mJ1zFwkIEfktR0tp+u3OmmyKjMMNBu37ZVNSJrkNssPY0XmyBgNQGYsyZ2wgwKhSoQd3Dwp9JGbwLXwmbZ+hBKcMmG0rAmfiupijIRlfwNWb/g3ujKsIW0+o4yYcDW+CtraFZbfWJMJk5Hvig5EgVd9Jm/ozBDEU3MSVSCBEGHESB1pYgAove5UokIAuesgbAqd7pQ19B6kHVRkeR5kQ22JsfsOZ9xvxdPUmoERRsn9Kk9OkonyPflQsbUFVqNZHXmAe7WbxpyaYhTjI+erBs3LRg+EjhQAHAVBpYrloA201Bt3BRAXW17QOUo4oI4NWfurHNTSFNrP90PDXLzO6thYjCfjABlUVZ9kmKDBLrBmT0yEw/0IwF2kZqRs6frHigYuiBuo1EgRcZVAeJ3mHdtcGkNrPhy5ZahCoQbUJ2J3rUnf3jOPhF11gK8jYscRx7AtouY6a/5dPggFvFC7K1JFqDSmfCtyRg=
@@ -18,8 +20,6 @@ before_install:
   #- curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > docker-compose
   #- chmod +x docker-compose
   #- sudo mv docker-compose /usr/local/bin
-  #- sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" $TRAVIS_BUILD_DIR/docker-compose.yml
-  #- cat $TRAVIS_BUILD_DIR/docker-compose.yml
 
 before_deploy:
   - echo $DEPLOY_RSA_PSW | gpg --yes --passphrase-fd 0 deploy_rsa.gpg
@@ -29,31 +29,24 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
   - echo -e "Host 164.90.168.125\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ls -la $TRAVIS_BUILD_DIR
-  #- ssh deploy@164.90.168.125 'sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml'
 deploy:
   - provider: script
-    script: bash docker_push.sh
+    script: bash scripts/docker_push.sh
     on:
       branch: master
   - provider: script
-    script: bash send_files.sh
+    script: bash scripts/send_files.sh
     on:
       branch: master
   - provider: script
-    script: bash update_version.sh
+    script: bash scripts/update_version.sh
     on:
       branch: master
   - provider: script
-    script: bash rollout.sh
+    script: bash scripts/rollout.sh
     on:
       branch: master
   - provider: script
-    script: bash remove_unused_images.sh
+    script: bash scripts/clean_system.sh
     on:
       branch: master
-
-#after_deploy:
-  #- ssh deploy@164.90.168.125 sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml
-  #- ssh deploy@164.90.168.125 "cd /home/deploy/website && sudo sh deployment.sh"
-  #- ssh deploy@164.90.168.125 "docker images -q | xargs docker rmi"
-  #- sudo sh ./deployment.sh

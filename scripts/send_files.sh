@@ -1,0 +1,1 @@
+rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR $SERVER_USER@$SERVER_IP:/home/deploy

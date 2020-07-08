@@ -1,1 +1,0 @@
-ssh deploy@164.90.168.125 "cd /home/deploy/website && sudo sh deployment.sh"
