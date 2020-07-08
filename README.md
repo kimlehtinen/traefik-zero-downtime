@@ -1,5 +1,6 @@
-# Docker zero downtime
+# Website
+My personal website.
 
-## Setup
-1. Create and run traefik proxy: `sh run_proxy.sh`
-2. Deploy: `sh deployment.sh`
+Features:
+- CI/CD pipeline using Travis CI and Docker
+- Zero downtime deployments using Traefik load balancer docker container in front of website docker container
