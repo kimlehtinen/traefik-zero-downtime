@@ -29,7 +29,6 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
   - echo -e "Host 164.90.168.125\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ls -la $TRAVIS_BUILD_DIR
-  - ssh deploy@164.90.168.125 "docker images -q | xargs docker rmi"
   #- ssh deploy@164.90.168.125 'sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml'
 deploy:
   - provider: script
@@ -46,6 +45,10 @@ deploy:
       branch: master
   - provider: script
     script: bash rollout.sh
+    on:
+      branch: master
+  - provider: script
+    script: bash remove_unused_images.sh
     on:
       branch: master
 
