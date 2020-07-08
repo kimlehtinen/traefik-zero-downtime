@@ -29,6 +29,7 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
   - echo -e "Host 164.90.168.125\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ls -la $TRAVIS_BUILD_DIR
+  - ssh deploy@164.90.168.125 "docker images -q | xargs docker rmi"
   #- ssh deploy@164.90.168.125 'sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml'
 deploy:
   - provider: script
@@ -39,8 +40,17 @@ deploy:
     script: bash send_files.sh
     on:
       branch: master
+  - provider: script
+    script: bash update_version.sh
+    on:
+      branch: master
+  - provider: script
+    script: bash rollout.sh
+    on:
+      branch: master
 
-after_deploy:
-  - ssh deploy@164.90.168.125 sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml
-  - ssh deploy@164.90.168.125 "cd /home/deploy/website && sudo sh deployment.sh"
+#after_deploy:
+  #- ssh deploy@164.90.168.125 sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml
+  #- ssh deploy@164.90.168.125 "cd /home/deploy/website && sudo sh deployment.sh"
+  #- ssh deploy@164.90.168.125 "docker images -q | xargs docker rmi"
   #- sudo sh ./deployment.sh

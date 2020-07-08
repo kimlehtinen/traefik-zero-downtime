@@ -1,0 +1,1 @@
+ssh deploy@164.90.168.125 "docker images -q | xargs docker rmi"
