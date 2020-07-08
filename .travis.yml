@@ -14,12 +14,12 @@ env:
 
 before_install:
   - docker build -t kimlehtinen/website:$WEBSITE_VERSION_NAME ./app
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" $TRAVIS_BUILD_DIR/docker-compose.yml
-  - cat $TRAVIS_BUILD_DIR/docker-compose.yml
+  #- sudo rm /usr/local/bin/docker-compose
+  #- curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > docker-compose
+  #- chmod +x docker-compose
+  #- sudo mv docker-compose /usr/local/bin
+  #- sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" $TRAVIS_BUILD_DIR/docker-compose.yml
+  #- cat $TRAVIS_BUILD_DIR/docker-compose.yml
 
 before_deploy:
   - echo $DEPLOY_RSA_PSW | gpg --yes --passphrase-fd 0 deploy_rsa.gpg
@@ -42,5 +42,5 @@ deploy:
 
 after_deploy:
   - ssh deploy@164.90.168.125 sed -i "s/website:latest/website:$WEBSITE_VERSION_NAME/g" /home/deploy/website/docker-compose.yml
-  #- sudo sh ./run_proxy.sh
+  - ssh deploy@164.90.168.125 "cd /home/deploy/website && sudo sh deployment.sh"
   #- sudo sh ./deployment.sh
