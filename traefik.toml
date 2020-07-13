@@ -1,24 +1,34 @@
-defaultEntryPoints = ["http"]
-logLevel = "DEBUG"
+debug = false
 
-[api]
-address = ":8080"
+logLevel = "ERROR"
+defaultEntryPoints = ["https","http"]
 
 [entryPoints]
   [entryPoints.http]
   address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
 
 [retry]
-attempts = 3
-maxMem = 3
 
 [docker]
 endpoint = "unix:///var/run/docker.sock"
-domain = "lehtin.com"
+domain = "kimlehtinen.com"
 watch = true
-exposedbydefault = false
+exposedByDefault = false
 
-[entryPoints.http.redirect]
+[acme]
+email = "klehtinen.oss@gmail.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+[acme.httpChallenge]
+entryPoint = "http"
+
+[entryPoints.https.redirect]
 permanent=true
-regex = "^http://www.(.*)"
-replacement = "http://$1"
+regex = "^https://www.(.*)"
+replacement = "https://$1"

@@ -8,8 +8,11 @@ services:
       - "traefik.backend=flask_app"
       - "traefik.backend.healthcheck.path=/health"
       - "traefik.backend.healthcheck.interval=1s"
-      - "traefik.frontend.rule=Host:lehtin.com"
-      - "traefik.port=5000"
+      - "traefik.frontend.rule=Host:kimlehtinen.com"
+      - "traefik.basic.port=5000"
+      - "traefik.basic.protocol=http"
+      - "traefik.admin.protocol=https"
+      - "traefik.admin.port=5443"
     networks:
       - traefik
 
